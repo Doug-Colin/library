@@ -1,15 +1,8 @@
 let library = [
   {
-    id: "8b8dc31f-b76e-4b94-a9c6-78c88c03bc52",
-    title: "Golfing on Meth",
-    author: "Todd Tweakout",
-    pages: 34,
-    haveRead: false,
-  },
-  {
     id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Life of a German",
-    author: "Ludwig Schmuzkopff",
+    title: "Stealing is Okay",
+    author: "The Hamburgler",
     pages: 254,
     haveRead: false,
   },
@@ -64,4 +57,18 @@ openAddBookForm.addEventListener("click", () => {
 
 closeAddBookForm.addEventListener("click", () => {
   dialog.close();
+});
+
+// ---------------------------------------
+const booksListContainer = document.getElementById("books-list-container");
+const template = document.getElementById("book-card-template");
+
+library.forEach((book) => {
+  const clone = template.content.cloneNode(true);
+
+  clone.querySelector("#book-title").textContent = book.title
+  clone.querySelector("#book-author").textContent = book.author
+  clone.querySelector("#book-length").textContent = `${book.pages} pages`
+
+  booksListContainer.append(clone);
 });
