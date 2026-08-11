@@ -17,7 +17,24 @@ function Book(title, author, pages, haveRead) {
   };
 }
 
-function addBookToLibrary(title, author, pages, haveRead) {
+function addNewBook(title, author, pages, haveRead) {
   const book = new Book(title, author, pages, haveRead);
   library.push(book);
 }
+
+// --- Open Add Book Form Dialog  ---------------
+
+const dialog = document.getElementById("form-dialog");
+const openAddBookForm = document.getElementById("open-add-book-form");
+const closeAddBookForm = document.getElementById("close");
+const alertButton = document.getElementById("alert");
+
+
+openAddBookForm.addEventListener("click", () => {
+  dialog.showModal();
+});
+
+closeAddBookForm.addEventListener("click", () => {
+  dialog.close();
+});
+
