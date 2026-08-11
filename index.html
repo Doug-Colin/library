@@ -14,11 +14,46 @@
 
     <dialog id="form-dialog">
       <form action="#" method="submit">
-        <input type="text">
+        <input type="text" />
       </form>
       <button type="button" id="close">Close</button>
     </dialog>
 
     <button id="open-add-book-form">New Book</button>
+
+    <div id="library-container">
+      <ul id="books-list"></ul>
+
+      <template id="book-card-template">
+        <li>
+          <article class="book-card">
+            <img class="book-cover" src="" alt="" />
+            <h3 class="book-title" id="book-title"></h3>
+            <p class="book-author" id="book-author"></p>
+            <p class="book-year" id="book-year"></p>
+            <p class="book-description" id="book-description"></p>
+
+            <div class="book-action-buttons">
+              <button class="book-action-button">
+                <img
+                  class="book-action-icon"
+                  src="./assets/icons/trash-can-outline.svg"
+                  alt=""
+                />
+                <span>Delete</span>
+              </button>
+              <div>
+                <label for="have-read-toggle"></label>
+                <input
+                  type="checkbox"
+                  id="have-read-toggle"
+                  class="have-read-toggle"
+                />
+              </div>
+            </div>
+          </article>
+        </li>
+      </template>
+    </div>
   </body>
 </html>
