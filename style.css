@@ -76,7 +76,7 @@ h6 {
   isolation: isolate;
 }
 
-/* ---------- Global Styles ---------- */
+/* ---------- Global Variables & Styles ---------- */
 
 ol,
 ul {
@@ -84,7 +84,6 @@ ul {
   margin: 0;
   padding: 0;
 }
-
 
 /* ---------- Layout ---------- */
 
@@ -94,14 +93,60 @@ ul {
 
 .books-list-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, .20fr));
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 0.2fr));
   justify-content: center;
-  gap: 1.5rem;
+  gap: 2.5rem;
 }
 
 .book-card {
+  /* Stay book-shaped by maintaining width to height ratio.  */
   aspect-ratio: 1 / 1.5;
-  height: auto;
+  /* --ratio: .66; */
+  --ratio: 1.5;
+  /* Make container queryable so we can check its width as it scales. */
+  container-type: inline-size;
+  /* Query 10% of width so '3D' page-thickness scales with container. */
+  --page-thickness: 10cqw;
+  position: relative;
+}
+
+/* Bottom book pages: */
+.book-card::before {
+  content: "";
+  position: absolute;
+  top: 93%;
+  width: 100%;
+  height: 7.7%;
+  background: repeating-linear-gradient(
+    to bottom,
+    #857b66 0px,
+    #a4a48b 1px,
+
+
+
+    #a79a7d 2px,
+    #cfc090 4px,
+
+    #857b66 4px,
+    #cfc090 5px,
+
+    #857b66 5px,
+    #decf9e 7px,
+    #d0aa59 7px,
+    #cfc090 8px,
+
+
+    #9d9478 8px,
+    #ebdfb7 10px
+  );
+
+  border-bottom: 3px solid rgb(101, 125, 117);
+}
+
+.book-cover {
+  position: absolute;
+  width: calc(100% - var(--page-thickness));
+  height: calc(100% - var(--page-thickness));
 }
 
 .book-action-icon {
@@ -110,17 +155,24 @@ ul {
 }
 
 .book-action-button {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 /* ---------- Styles ---------- */
 
 body {
-    background-color: rgb(206, 193, 128);
+  background-color: rgb(83, 80, 90);
 }
 
 .book-card {
-    background-color: aquamarine;
-    border: 1px solid rgb(82, 163, 136);
+  background-color: beige;
+  border: 3px solid rgb(101, 125, 117);
+}
+
+.book-cover {
+  background-color: rgb(132, 162, 152);
+  opacity: 75%;
+  border-right: 3px solid rgb(101, 125, 117);
+  border-bottom: 3px solid rgb(101, 125, 117);
 }
