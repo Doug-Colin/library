@@ -88,9 +88,39 @@ ul {
 
 /* ---------- Layout ---------- */
 
+.app-shell {
+  padding: 3rem 5rem;
+}
+
+.books-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, .20fr));
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.book-card {
+  aspect-ratio: 1 / 1.5;
+  height: auto;
+}
+
+.book-action-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.book-action-button {
+    display: flex;
+    align-items: center;
+}
 
 /* ---------- Styles ---------- */
 
 body {
     background-color: rgb(206, 193, 128);
+}
+
+.book-card {
+    background-color: aquamarine;
+    border: 1px solid rgb(82, 163, 136);
 }
