@@ -114,15 +114,13 @@ ul {
 .book-card::before {
   content: "";
   position: absolute;
-  top: 93%;
+  top: calc(100% - var(--page-thickness));
   width: 100%;
   height: 7.7%;
   background: repeating-linear-gradient(
     to bottom,
     #857b66 0px,
     #a4a48b 1px,
-
-
 
     #a79a7d 2px,
     #cfc090 4px,
@@ -135,9 +133,15 @@ ul {
     #d0aa59 7px,
     #cfc090 8px,
 
-
     #9d9478 8px,
     #ebdfb7 10px
+  );
+
+  clip-path: polygon(
+    0% 0%,
+    var(--page-thickness) 100%,
+    100% 100%,
+    calc(100% - var(--page-thickness)) 0%
   );
 
   border-bottom: 3px solid rgb(101, 125, 117);
@@ -174,5 +178,5 @@ body {
   background-color: rgb(132, 162, 152);
   opacity: 75%;
   border-right: 3px solid rgb(101, 125, 117);
-  border-bottom: 3px solid rgb(101, 125, 117);
+  border-bottom: 3px solid red;
 }
