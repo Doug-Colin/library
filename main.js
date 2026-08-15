@@ -139,10 +139,10 @@ function Book(title, author, pages, haveRead) {
   this.pages = pages;
   this.haveRead = haveRead;
   this.toggleHaveRead = function () {
-    haveRead = !haveRead;
+    this.haveRead = !this.haveRead;
   };
   this.info = function () {
-    console.log(`${title} by ${author}, ${pages} pages, haveRead: ${haveRead}`);
+    console.log(`${this.title} by ${this.author}, ${this.pages} pages, haveRead: ${this.haveRead}`);
   };
 }
 
@@ -156,7 +156,6 @@ function addNewBook(title, author, pages, haveRead) {
 const dialog = document.getElementById("form-dialog");
 const openAddBookForm = document.getElementById("open-add-book-form");
 const closeAddBookForm = document.getElementById("close");
-const alertButton = document.getElementById("alert");
 
 openAddBookForm.addEventListener("click", () => {
   dialog.showModal();
@@ -173,9 +172,9 @@ const template = document.getElementById("book-card-template");
 library.forEach((book) => {
   const clone = template.content.cloneNode(true);
 
-  clone.querySelector("#book-title").textContent = book.title
-  clone.querySelector("#book-author").textContent = book.author
-  clone.querySelector("#book-length").textContent = `${book.pages} pages`
+  clone.querySelector(".book-title").textContent = book.title;
+  clone.querySelector(".book-author").textContent = book.author;
+  clone.querySelector(".book-length").textContent = `${book.pages} pages`;
 
   booksListContainer.append(clone);
 });
