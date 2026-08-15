@@ -1,133 +1,6 @@
-let library = [
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
-  {
-    id: "e671a081-e7eb-4a61-be42-c8299b676a3a",
-    title: "Stealing is Okay",
-    author: "The Hamburgler",
-    pages: 254,
-    haveRead: false,
-  },
+import { mockBookData } from "./data/mock-book-data.js";
 
-  
-];
+let library = [ ...mockBookData];
 
 function Book(title, author, pages, haveRead) {
   if (!new.target) {
@@ -142,7 +15,9 @@ function Book(title, author, pages, haveRead) {
     this.haveRead = !this.haveRead;
   };
   this.info = function () {
-    console.log(`${this.title} by ${this.author}, ${this.pages} pages, haveRead: ${this.haveRead}`);
+    console.log(
+      `${this.title} by ${this.author}, ${this.pages} pages, haveRead: ${this.haveRead}`,
+    );
   };
 }
 
