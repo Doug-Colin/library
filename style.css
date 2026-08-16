@@ -110,42 +110,49 @@ ul {
 .book-card {
   position: relative;
   /* Stay book-shaped by maintaining width to height ratio.  */
-  aspect-ratio: 1 / 1.4;
+  aspect-ratio: 1 / 1.45;
+  /* Isolate the z-index stacking of children so that they don't affect other page elements.  */
+  isolation: isolate;
   /* Make container queryable so we can check its width as it scales. */
   container-type: inline-size;
   /* Query 10% of width so '3D' page-thickness scales with container. */
   --page-thickness: 10cqw;
-  /* Overlap for hiding anti-aliasing seam at 'page strip' pseudo element miters. */
-  --page-miter-overlap: 2px;
+  /* Overlap for hiding anti-aliasing seams at 'page strip' pseudo element miters. */
+  --page-miter-overlap: 0px;
+  /* Overlap for hiding anti-aliasing seams revealed at certain screen sizes, 
+  and background revealed when .book-cover's corners are rounded. */
+  --cover-pages-overlap: 3px;
 }
 
 .book-cover {
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% - var(--page-thickness));
-  height: calc(100% - var(--page-thickness));
+  width: calc(100% - var(--page-thickness) + var(--cover-pages-overlap));
+  height: calc(100% - var(--page-thickness) + var(--cover-pages-overlap));
   padding: 1rem 1rem;
+  border-radius: 5px 5px 5px 5px;
 }
 
 /* Bottom book pages. */
 .book-card::before {
   content: "";
   position: absolute;
+
   bottom: 0;
   left: 0;
   height: var(--page-thickness);
   width: 100%;
   background: repeating-linear-gradient(to bottom, var(--page-gradient));
 
+  /* Clockwise clip path */
   clip-path: polygon(
     0% 0%,
-    var(--page-thickness) 100%,
+    calc(100% - var(--page-thickness)) 0%,
     100% 100%,
-    calc(100% - var(--page-thickness) + var(--page-miter-overlap)) 0%
+    var(--page-thickness) 100%
   );
 
-  border-bottom: 3px solid var(--book-cover-edge-color);
 }
 
 /* Right side book pages. */
@@ -165,7 +172,15 @@ ul {
     0% calc(100% - var(--page-thickness))
   );
 
-  border-right: 3px solid var(--book-cover-edge-color);
+}
+
+.book-card::before,
+.book-card::after {
+  z-index: 0;
+}
+
+.book-cover {
+  z-index: 1;
 }
 
 .book-action-icon {
@@ -181,17 +196,14 @@ ul {
 /* ---------- Styles ---------- */
 
 body {
-  background-color: rgb(83, 80, 90);
+  background-color: rgb(135, 124, 164);
 }
 
 .book-card {
-  /* background-color: beige; */
-  /* border: 3px solid rgb(101, 125, 117); */
 }
 
 .book-cover {
-  background-color: rgb(132, 162, 152);
-  opacity: 75%;
-  border-right: 2px solid var(--book-cover-edge-color);
-  border-bottom: 2px solid var(--book-cover-edge-color);
+  background-color: #316a53;
+  /* Toggle to view book cover overlap of pages */
+  /* opacity: 75%; */
 }
