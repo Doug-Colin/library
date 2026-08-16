@@ -124,17 +124,19 @@ body {
     #9d9478 8px, #ebdfb7 10px;
 
   --book-cover-color: #316a53;
-
+  --back-book-cover-reveal: 5px;
+  --perspective-skew: 2%; 
   /* background: var(--book-cover-color); */
 }
 
 .book-cover {
+  opacity: 75%;
   display: flex;
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% - var(--page-thickness) + var(--book-cover-overlap));
-  height: calc(100% - var(--page-thickness) + var(--book-cover-overlap));
+  width: calc(100% - var(--back-book-cover-reveal) - var(--page-thickness) + var(--book-cover-overlap));
+  height: calc(100% - var(--back-book-cover-reveal) - var(--page-thickness) + var(--book-cover-overlap));
 
   /* Ensure book cover overlaps page strip pseudo elements by rendering it on top. */
   z-index: 1;
@@ -148,8 +150,8 @@ body {
 .book-card::before {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 0;
+  bottom: var(--back-book-cover-reveal);
+  right: var(--back-book-cover-reveal);
   height: var(--page-thickness);
   width: 100%;
   /* Ensure page strip renders beneath book cover. */
@@ -159,19 +161,21 @@ body {
 
   /* Clockwise coordinates. */
   clip-path: polygon(
-    0% 0%,
+    calc(0% + var(--back-book-cover-reveal)) 0%,
     calc(100% - var(--page-thickness) + var(--page-miter-overlap)) 0%,
-    calc(100% + var(--page-miter-overlap)),
-    var(--page-thickness) 100%
+    calc(100% + var(--page-miter-overlap)) 100%,
+    calc(var(--page-thickness) + var(--back-book-cover-reveal) + var(--perspective-skew)) 100%
   );
 }
 
 /* Right side book pages. */
 .book-card::after {
+  /* opacity: 75%; */
   content: "";
   position: absolute;
-  top: 0;
-  right: 0;
+  /* top: 0; */
+  bottom: var(--back-book-cover-reveal);
+  right: var(--back-book-cover-reveal);
   width: var(--page-thickness);
   height: 100%;
   /* Ensure page strip renders beneath book cover. */
@@ -181,8 +185,8 @@ body {
 
   /* Clockwise coordinates. */
   clip-path: polygon(
-    0% 0%,
-    100% var(--page-thickness),
+    0% calc(0% + var(--back-book-cover-reveal)),
+    100% calc(var(--page-thickness) + var(--back-book-cover-reveal) + var(--perspective-skew)),
     100% 100%,
     0% calc(100% - var(--page-thickness))
   );
