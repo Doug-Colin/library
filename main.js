@@ -26,7 +26,7 @@ function addNewBook(title, author, pages, haveRead) {
   library.push(book);
 }
 
-// --- Open Dialog with Form to Add Book ---------------
+// --- Form dialog enables users to add books. ---------------
 
 const dialog = document.getElementById("form-dialog");
 const openAddBookForm = document.getElementById("open-add-book-form");
@@ -40,9 +40,14 @@ closeAddBookForm.addEventListener("click", () => {
   dialog.close();
 });
 
-// ---------------------------------------
+// --- Render View.  ---------------
 const booksListContainer = document.getElementById("books-list-container");
 const template = document.getElementById("book-card-template");
+
+
+function render() {
+booksListContainer.replaceChildren()
+
 
 library.forEach((book) => {
   const clone = template.content.cloneNode(true);
@@ -53,3 +58,7 @@ library.forEach((book) => {
 
   booksListContainer.append(clone);
 });
+
+}
+
+render()
