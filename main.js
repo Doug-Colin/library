@@ -47,13 +47,14 @@ bookCountSlider.max = mockBookData.length;
 
 const sliderOutput = document.querySelector("#book-count-output");
 
+function displayBookCount(count) {
+  sliderOutput.textContent = count;
+  renderBooks(mockBookData.slice(0, count));
+}
+
 bookCountSlider.addEventListener("input", (event) => {
-  const sliderValue = event.target.value;
-  const bookQuantity = Number(sliderValue);
-
-  sliderOutput.textContent = bookQuantity;
-
-  renderBooks(mockBookData.slice(0, bookQuantity));
+  const bookCount = Number(event.target.value);
+  displayBookCount(bookCount);
 });
 
 // --- Render View.  ---------------
@@ -74,4 +75,5 @@ function renderBooks(booksArray) {
   });
 }
 
-renderBooks(mockBookData);
+displayBookCount(Number(bookCountSlider.value));
+
