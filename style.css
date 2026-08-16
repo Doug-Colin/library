@@ -126,7 +126,9 @@ body {
   --book-cover-color: #316a53;
   --back-book-cover-reveal: 5px;
   --perspective-skew: 2%; 
-  /* background: var(--book-cover-color); */
+  /* Temporarily distinguish background color of this container while
+     we establish its clip path to suggest book back binding and inside of back cover.  */
+  background: #224a3a;
 }
 
 .book-cover {
@@ -153,7 +155,7 @@ body {
   bottom: var(--back-book-cover-reveal);
   right: var(--back-book-cover-reveal);
   height: var(--page-thickness);
-  width: 100%;
+  width: calc(100% - var(--back-book-cover-reveal));
   /* Ensure page strip renders beneath book cover. */
   z-index: 0;
 
@@ -170,14 +172,13 @@ body {
 
 /* Right side book pages. */
 .book-card::after {
-  /* opacity: 75%; */
   content: "";
   position: absolute;
   /* top: 0; */
   bottom: var(--back-book-cover-reveal);
   right: var(--back-book-cover-reveal);
   width: var(--page-thickness);
-  height: 100%;
+  height: calc(100% - var(--back-book-cover-reveal));
   /* Ensure page strip renders beneath book cover. */
   z-index: 0;
 
