@@ -76,16 +76,7 @@ h6 {
   isolation: isolate;
 }
 
-/* ---------- Global Variables & Styles ---------- */
-
-:root {
-  --page-gradient:
-    #857b66 0px, #a4a48b 1px, #a79a7d 2px, #cfc090 4px, #857b66 4px,
-    #cfc090 5px, #857b66 5px, #decf9e 7px, #d0aa59 7px, #cfc090 8px,
-    #9d9478 8px, #ebdfb7 10px;
-
-  --book-cover-edge-color: rgb(101, 125, 117);
-}
+/* ---------- Global Styles ---------- */
 
 ol,
 ul {
@@ -94,7 +85,11 @@ ul {
   padding: 0;
 }
 
-/* ---------- Layout ---------- */
+/* ---------- Layout and Locally Scoped Styles ---------- */
+
+body {
+  background-color: rgb(135, 124, 164);
+}
 
 .app-shell {
   padding: 3rem 5rem;
@@ -117,42 +112,54 @@ ul {
   container-type: inline-size;
   /* Query 10% of width so '3D' page-thickness scales with container. */
   --page-thickness: 10cqw;
-  /* Overlap for hiding anti-aliasing seams at 'page strip' pseudo element miters. */
-  --page-miter-overlap: 0px;
+  /* Overlap for hiding anti-aliasing seams at miter of 'page strip' pseudo elements. */
+  --overlap-page-miter: 0px;
   /* Overlap for hiding anti-aliasing seams revealed at certain screen sizes, 
-  and background revealed when .book-cover's corners are rounded. */
-  --cover-pages-overlap: 3px;
+  and background revealed when .book-cover's corners are rounded off. */
+  --overlap-cover-to-pages: 3px;
+
+  --page-gradient:
+    #857b66 0px, #a4a48b 1px, #a79a7d 2px, #cfc090 4px, #857b66 4px,
+    #cfc090 5px, #857b66 5px, #decf9e 7px, #d0aa59 7px, #cfc090 8px,
+    #9d9478 8px, #ebdfb7 10px;
 }
 
 .book-cover {
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% - var(--page-thickness) + var(--cover-pages-overlap));
-  height: calc(100% - var(--page-thickness) + var(--cover-pages-overlap));
+  width: calc(100% - var(--page-thickness) + var(--overlap-cover-to-pages));
+  height: calc(100% - var(--page-thickness) + var(--overlap-cover-to-pages));
+
+  /* Ensure book cover overlaps page strip pseudo elements by rendering it on top. */
+  z-index: 1;
   padding: 1rem 1rem;
+
   border-radius: 5px 5px 5px 5px;
+  --book-cover-color: #316a53;
+  background-color: var(--book-cover-color);
 }
 
 /* Bottom book pages. */
 .book-card::before {
   content: "";
   position: absolute;
-
   bottom: 0;
   left: 0;
   height: var(--page-thickness);
   width: 100%;
+  /* Ensure page strip renders beneath book cover. */
+  z-index: 0;
+
   background: repeating-linear-gradient(to bottom, var(--page-gradient));
 
-  /* Clockwise clip path */
+  /* Clockwise coordinates. */
   clip-path: polygon(
     0% 0%,
     calc(100% - var(--page-thickness)) 0%,
     100% 100%,
     var(--page-thickness) 100%
   );
-
 }
 
 /* Right side book pages. */
@@ -163,24 +170,18 @@ ul {
   right: 0;
   width: var(--page-thickness);
   height: 100%;
+  /* Ensure page strip renders beneath book cover. */
+  z-index: 0;
+
   background: repeating-linear-gradient(to right, var(--page-gradient));
 
+  /* Clockwise coordinates. */
   clip-path: polygon(
     0% 0%,
     100% var(--page-thickness),
     100% 100%,
     0% calc(100% - var(--page-thickness))
   );
-
-}
-
-.book-card::before,
-.book-card::after {
-  z-index: 0;
-}
-
-.book-cover {
-  z-index: 1;
 }
 
 .book-action-icon {
@@ -191,19 +192,4 @@ ul {
 .book-action-button {
   display: flex;
   align-items: center;
-}
-
-/* ---------- Styles ---------- */
-
-body {
-  background-color: rgb(135, 124, 164);
-}
-
-.book-card {
-}
-
-.book-cover {
-  background-color: #316a53;
-  /* Toggle to view book cover overlap of pages */
-  /* opacity: 75%; */
 }
