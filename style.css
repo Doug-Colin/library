@@ -123,14 +123,12 @@ body {
 
   --book-cover-color: #316a53;
   --back-book-cover-reveal: 5px;
-  --perspective-skew: 2%;
-  /* Temporarily distinguish background color of this container while
-     we establish its clip path to suggest book back binding and inside of back cover.  */
-  background: #224a3a;
+  --perspective-skew: 1%;
+
 }
 
+
 .book-cover {
-  opacity: 75%;
   display: flex;
   position: absolute;
   top: 0;
@@ -207,6 +205,18 @@ body {
     100% 100%,
     0% calc(100% - var(--page-thickness))
   );
+}
+
+.book-back-cover {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: calc(100% - var(--page-thickness) - var(--back-book-cover-reveal));
+  height: calc(100% - var(--page-thickness) - var(--back-book-cover-reveal));;
+  
+  z-index: -1;
+  background-color: var(--book-cover-color);
+  border-radius: 5px 5px 5px 5px;
 }
 
 .book-action-icon {
