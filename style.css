@@ -112,10 +112,8 @@ body {
   container-type: inline-size;
   /* Query 10% of width so '3D' page-thickness scales with container. */
   --page-thickness: 10cqw;
-  /* Overlap for hiding anti-aliasing seams at miter of 'page strip' pseudo elements. */
-  --page-miter-overlap: 1px;
-  /* Overlap for hiding anti-aliasing seams revealed at certain screen sizes, 
-  and background revealed when .book-cover's corners are rounded off. */
+  /* Overlap for hiding anti-aliasing seams between book cover and pages at certain screen sizes. */
+  /* Also hides background revealed when .book-cover's corners are rounded off. */
   --book-cover-overlap: 3px;
 
   --page-gradient:
@@ -125,7 +123,7 @@ body {
 
   --book-cover-color: #316a53;
   --back-book-cover-reveal: 5px;
-  --perspective-skew: 2%; 
+  --perspective-skew: 2%;
   /* Temporarily distinguish background color of this container while
      we establish its clip path to suggest book back binding and inside of back cover.  */
   background: #224a3a;
@@ -137,8 +135,14 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: calc(100% - var(--back-book-cover-reveal) - var(--page-thickness) + var(--book-cover-overlap));
-  height: calc(100% - var(--back-book-cover-reveal) - var(--page-thickness) + var(--book-cover-overlap));
+  width: calc(
+    100% - var(--back-book-cover-reveal) - var(--page-thickness) +
+      var(--book-cover-overlap)
+  );
+  height: calc(
+    100% - var(--back-book-cover-reveal) - var(--page-thickness) +
+      var(--book-cover-overlap)
+  );
 
   /* Ensure book cover overlaps page strip pseudo elements by rendering it on top. */
   z-index: 1;
@@ -161,12 +165,20 @@ body {
 
   background: repeating-linear-gradient(to bottom, var(--page-gradient));
 
-  /* Clockwise coordinates. */
+  /* 
+  Clockwise coordinates. 
+  Path clipped at book binding but not miter;
+  extends 'fully' beneath right strip to hide anti-aliasing seams.
+  */
   clip-path: polygon(
     calc(0% + var(--back-book-cover-reveal)) 0%,
-    calc(100% - var(--page-thickness) + var(--page-miter-overlap)) 0%,
-    calc(100% + var(--page-miter-overlap)) 100%,
-    calc(var(--page-thickness) + var(--back-book-cover-reveal) + var(--perspective-skew)) 100%
+    100% 0%,
+    100% 100%,
+    calc(
+        var(--page-thickness) + var(--back-book-cover-reveal) +
+          var(--perspective-skew)
+      )
+      100%
   );
 }
 
@@ -187,7 +199,11 @@ body {
   /* Clockwise coordinates. */
   clip-path: polygon(
     0% calc(0% + var(--back-book-cover-reveal)),
-    100% calc(var(--page-thickness) + var(--back-book-cover-reveal) + var(--perspective-skew)),
+    100%
+      calc(
+        var(--page-thickness) + var(--back-book-cover-reveal) +
+          var(--perspective-skew)
+      ),
     100% 100%,
     0% calc(100% - var(--page-thickness))
   );
