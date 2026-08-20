@@ -126,19 +126,17 @@ body {
 
   --book-card-width: 100cqw;
   --book-card-height: 100cqh;
-  /* Turn off while refactoring cover and back cover to scale more robustly  */
+  /* Turn off while refactoring front and back covers to scale more robustly  */
   --perspective-skew: 0px;
   --book-cover-inset: calc(
     var(--back-book-cover-reveal) + var(--page-thickness) -
       var(--book-cover-overlap)
   );
-
   --book-cover-width: calc(var(--book-card-width) - var(--book-cover-inset));
   --book-cover-height: calc(var(--book-card-height) - var(--book-cover-inset));
 }
 
 .book-cover {
-  opacity: 60%;
   display: flex;
   position: absolute;
   top: 0;
@@ -171,8 +169,8 @@ body {
 
   /* 
   Clockwise coordinates. 
-  Path clipped at book binding but not miter;
-  extends 'fully' beneath right strip to hide anti-aliasing seams.
+  Path clipped on left side, where it meets book binding, but not right side,
+  at the miter of the two page strips, so that it extends beneath mitered right strip, hiding anti-aliasing seams.
   */
   clip-path: polygon(
     calc(0% + var(--back-book-cover-reveal)) 0%,
@@ -222,9 +220,6 @@ body {
   width: var(--book-cover-width);
   height: var(--book-cover-height);
 
-  /* width: calc(100% - var(--page-thickness) - var(--back-book-cover-reveal));
-  height: calc(100% - var(--page-thickness) - var(--back-book-cover-reveal)); */
-
   z-index: -1;
   background-color: var(--book-cover-color);
   border-radius: var(--book-cover-corner-radius);
@@ -233,23 +228,16 @@ body {
 
 /* Book's binding (lower left corner of cover). */
 .book-back-cover::before {
-  /* Hide this while building more robust alternative. */
-  display: none;
-
-  content: "";
+content: "";
   position: absolute;
-  /* Position edges roughly center of front & back cover's rounded corners. */
-  bottom: calc((var(--back-book-cover-reveal) / 2.5));
-  left: calc(
-    -1 * (var(--page-thickness) + (var(--back-book-cover-reveal) / 1.5))
-  );
-
-  width: calc(var(--page-thickness) + (var(--back-book-cover-reveal) * 2));
-  height: calc(var(--page-thickness) + var(--back-book-cover-reveal));
+  bottom: 0;
+  left: calc(-1 * var(--book-cover-inset));
+  width: var(--book-cover-inset);
+  height: var(--book-cover-inset);
 
   background-color: var(--book-cover-color);
 
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 90.75% 100%, 0.5% 7%);
+clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
 }
 
 .book-action-icon {
