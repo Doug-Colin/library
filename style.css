@@ -144,7 +144,7 @@ body {
   /* Ensure book cover overlaps page strip pseudo elements by rendering it on top. */
   z-index: 1;
   padding: 1rem 1rem;
-  
+
   background-color: var(--book-cover-color);
 
   border-radius: var(--book-cover-corner-radius);
@@ -166,8 +166,8 @@ body {
 
   /* 
   Clockwise coordinates. 
-  Path clipped on left side, where it meets book binding, but not right side,
-  at the miter of the two page strips; extending this strip beneath the other prevents anti-aliasing seams that appeared when both were mitered.
+  Path clipped on left end, where it meets book binding, but not right end,
+  at the miter of the two page strips; fully extending this strip beneath the other's miter hides anti-aliasing seams that appear when both were mitered.
   */
   clip-path: polygon(
     calc(0% + var(--back-book-cover-reveal)) 0%,
@@ -199,12 +199,12 @@ body {
   );
 }
 
-/* Book's rear cover. */
-.book-back-cover {
+/* Book's rear cover and book's binding (lower left corner). */
+.book-back-cover-and-binding {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: var(--book-cover-width);
+  width: var(--book-card-width);
   height: var(--book-cover-height);
   /* Ensure back cover renders beneath page strips. */
   z-index: -1;
@@ -212,19 +212,15 @@ body {
   background-color: var(--book-cover-color);
   border-radius: var(--book-cover-corner-radius);
   border-bottom-left-radius: 0;
-}
 
-/* Book's binding (lower left corner of cover). */
-.book-back-cover::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: calc(-1 * var(--book-cover-inset));
-  width: var(--book-cover-inset);
-  height: var(--book-cover-inset);
-
-  background-color: var(--book-cover-color);
-  clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
+  /* Clockwise coordinates. */
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 100%,
+    var(--book-cover-inset) 100%,
+    0% calc(var(--book-cover-height) - var(--book-cover-inset))
+  );
 }
 
 .book-action-icon {
