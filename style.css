@@ -126,8 +126,6 @@ body {
 
   --book-card-width: 100cqw;
   --book-card-height: 100cqh;
-  /* Turn off while refactoring front and back covers to scale more robustly  */
-  --perspective-skew: 0px;
   --book-cover-inset: calc(
     var(--back-book-cover-reveal) + var(--page-thickness) -
       var(--book-cover-overlap)
@@ -141,24 +139,23 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-
   width: var(--book-cover-width);
   height: var(--book-cover-height);
-
   /* Ensure book cover overlaps page strip pseudo elements by rendering it on top. */
   z-index: 1;
   padding: 1rem 1rem;
+  
+  background-color: var(--book-cover-color);
 
   border-radius: var(--book-cover-corner-radius);
   border-bottom-left-radius: 0;
-  background-color: var(--book-cover-color);
 }
 
 /* Bottom book pages. */
 .book-card::before {
   content: "";
-  position: absolute;
   bottom: var(--back-book-cover-reveal);
+  position: absolute;
   right: var(--back-book-cover-reveal);
   height: var(--page-thickness);
   width: calc(100% - var(--back-book-cover-reveal));
@@ -170,17 +167,13 @@ body {
   /* 
   Clockwise coordinates. 
   Path clipped on left side, where it meets book binding, but not right side,
-  at the miter of the two page strips, so that it extends beneath mitered right strip, hiding anti-aliasing seams.
+  at the miter of the two page strips; extending this strip beneath the other prevents anti-aliasing seams that appeared when both were mitered.
   */
   clip-path: polygon(
     calc(0% + var(--back-book-cover-reveal)) 0%,
     100% 0%,
     100% 100%,
-    calc(
-        var(--page-thickness) + var(--back-book-cover-reveal) +
-          var(--perspective-skew)
-      )
-      100%
+    calc(var(--page-thickness) + var(--back-book-cover-reveal)) 100%
   );
 }
 
@@ -200,11 +193,7 @@ body {
   /* Clockwise coordinates. */
   clip-path: polygon(
     0% calc(0% + var(--back-book-cover-reveal)),
-    100%
-      calc(
-        var(--page-thickness) + var(--back-book-cover-reveal) +
-          var(--perspective-skew)
-      ),
+    100% calc(var(--page-thickness) + var(--back-book-cover-reveal)),
     100% 100%,
     0% calc(100% - var(--page-thickness))
   );
@@ -212,15 +201,14 @@ body {
 
 /* Book's rear cover. */
 .book-back-cover {
-  /* display: none; */
   position: absolute;
   right: 0;
   bottom: 0;
-
   width: var(--book-cover-width);
   height: var(--book-cover-height);
-
+  /* Ensure back cover renders beneath page strips. */
   z-index: -1;
+
   background-color: var(--book-cover-color);
   border-radius: var(--book-cover-corner-radius);
   border-bottom-left-radius: 0;
@@ -228,7 +216,7 @@ body {
 
 /* Book's binding (lower left corner of cover). */
 .book-back-cover::before {
-content: "";
+  content: "";
   position: absolute;
   bottom: 0;
   left: calc(-1 * var(--book-cover-inset));
@@ -236,8 +224,7 @@ content: "";
   height: var(--book-cover-inset);
 
   background-color: var(--book-cover-color);
-
-clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
+  clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
 }
 
 .book-action-icon {
