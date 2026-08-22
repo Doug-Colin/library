@@ -135,8 +135,8 @@ body {
   --book-cover-corner-radius: 1cqw;
 
   /* Adjusts perspective angles of rear cover's top right and bottom left corners. */
-  --perspective-skew-top-right: 4cqw;
-  --perspective-skew-bottom-left: 9cqw;
+  --perspective-skew-top-right: 0cqw;
+  --perspective-skew-bottom-left: 0cqw;
 }
 
 .book-cover {
@@ -251,4 +251,12 @@ body {
 .book-action-button {
   display: flex;
   align-items: center;
+}
+
+.book-title,
+.book-author,
+.book-length,
+.book-description,
+.book-action-buttons {
+  visibility: hidden;
 }
