@@ -133,9 +133,14 @@ body {
       var(--book-front-cover-overlap)
   );
   --book-cover-corner-radius: 1cqw;
+
+  /* Adjusts perspective angles of rear cover's top right and bottom left corners. */
+  --perspective-skew-top-right: 4cqw;
+  --perspective-skew-bottom-left: 9cqw;
 }
 
 .book-cover {
+
   display: flex;
   position: absolute;
   top: 0;
@@ -167,8 +172,12 @@ body {
 
   /* Clockwise coordinates. */
   clip-path: polygon(
-    0% calc(0% + var(--book-back-cover-reveal)),
-    100% calc(var(--page-thickness) + var(--book-back-cover-reveal)),
+    0% var(--book-front-cover-overlap),
+    100%
+      calc(
+        var(--page-thickness) + var(--book-back-cover-reveal) +
+          var(--perspective-skew-top-right)
+      ),
     100% 100%,
     0% calc(100% - var(--page-thickness))
   );
@@ -192,9 +201,15 @@ body {
   /* 
   Clockwise coordinates. 
   Path clipped on left end, where it meets the book's spine, but not right end,
-  at the miter of the two page strips; fully extending this strip beneath the other's miter hides anti-aliasing seams that appear both are mitered and adjoined.
+  at the miter of the two page strips; fully extending this strip beneath the other 
+  hides anti-aliasing seams that appear when both are mitered and adjoined.
   */
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, var(--book-cover-inset) 100%);
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 100%,
+    calc(var(--book-cover-inset) + var(--perspective-skew-bottom-left)) 100%
+  );
 }
 
 /* Book's rear cover and book's spine (lower left corner). */
@@ -205,7 +220,8 @@ body {
   right: 0;
   bottom: 0;
   width: var(--book-card-width);
-  height: var(--book-cover-height);
+  /* height: var(--book-cover-height); */
+  height: calc(var(--book-cover-height) - var(--perspective-skew-top-right));
   /* Ensure back cover renders beneath page strips. */
   z-index: -1;
 
@@ -218,8 +234,12 @@ body {
     0% 0%,
     100% 0%,
     100% 100%,
-    var(--book-cover-inset) 100%,
-    0% calc(var(--book-cover-height) - var(--book-cover-inset))
+    calc(var(--book-cover-inset) + var(--perspective-skew-bottom-left)) 100%,
+    0%
+      calc(
+        var(--book-cover-height) - var(--book-cover-inset) -
+          var(--perspective-skew-top-right)
+      )
   );
 }
 
