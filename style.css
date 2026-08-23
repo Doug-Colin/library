@@ -137,10 +137,15 @@ body {
   /* Adjusts perspective angles of rear cover's top right and bottom left corners. */
   --perspective-skew-top-right: 0cqw;
   --perspective-skew-bottom-left: 0cqw;
+
+  /* Lighting and shadows. */
+  /* Warm tone for highlights. */
+  --highlight-rgb: 255 248 232;
+  /* Cool tone for shadows. */
+  --shadow-rgb: 10 6 28;
 }
 
 .book-cover {
-
   display: flex;
   position: absolute;
   top: 0;
@@ -155,6 +160,14 @@ body {
 
   border-radius: var(--book-cover-corner-radius);
   border-bottom-left-radius: 0;
+
+  /* Cover's edges; right and bottom. */
+  /* <offset-x> <offset-y> <blur-radius> <spread-radius> <color> / <alpha> */
+  box-shadow: 
+  /* Defines lip. */
+    inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
+    /* Darkens outer edge. */ inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw
+      rgb(var(--shadow-rgb) / 0.2);
 }
 
 /* Right side book pages. */
@@ -212,7 +225,7 @@ body {
   );
 }
 
-/* Book's rear cover and book's spine (lower left corner). */
+/* Book's rear cover and book's spine. */
 .book-back-cover-and-spine {
   /* temp */
   /* visibility: hidden; */
@@ -229,9 +242,12 @@ body {
   border-radius: var(--book-cover-corner-radius);
   border-bottom-left-radius: 0;
 
-  /* Clockwise coordinates. */
+  /* 
+  Path clips rear cover, which extends full width of parent container, 
+  to represent book's spine by wrapping the left edge of bottom pages.
+  */
   clip-path: polygon(
-    0% 0%,
+    /* Clockwise coordinates. */ 0% 0%,
     100% 0%,
     100% 100%,
     calc(var(--book-cover-inset) + var(--perspective-skew-bottom-left)) 100%,
@@ -241,6 +257,14 @@ body {
           var(--perspective-skew-top-right)
       )
   );
+
+  /* Cover's edges; right and bottom. */
+  /* <offset-x> <offset-y> <blur-radius> <spread-radius> <color> / <alpha> */
+  box-shadow: 
+  /* Defines lip. */
+  inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
+  /* Darkens outer edge. */
+  inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw rgb(var(--shadow-rgb) / 0.2);
 }
 
 .book-action-icon {
