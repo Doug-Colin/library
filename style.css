@@ -118,15 +118,17 @@ body {
   --book-front-cover-overlap: 1.5cqw;
   /* Ensure structure of 'back' side of book matches front. */
   --book-back-cover-reveal: var(--book-front-cover-overlap);
-
   --page-gradient:
     #857b66 0px, #a4a48b 1px, #a79a7d 2px, #cfc090 4px, #857b66 4px,
     #cfc090 5px, #857b66 5px, #decf9e 7px, #d0aa59 7px, #cfc090 8px,
     #9d9478 8px, #ebdfb7 10px;
 
+
   --book-cover-width: calc(var(--book-card-width) - var(--book-cover-inset));
   --book-cover-height: calc(var(--book-card-height) - var(--book-cover-inset));
+
   --book-cover-color: #316a53;
+
   /* Value is identical to --page-thickness; listed as is to be explicit.  */
   --book-cover-inset: calc(
     var(--book-back-cover-reveal) + var(--page-thickness) -
@@ -139,13 +141,14 @@ body {
   --perspective-skew-bottom-left: 0cqw;
 
   /* Lighting and shadows. */
-  /* Warm tone for highlights. */
+  /* Warm tone */
   --highlight-rgb: 255 248 232;
-  /* Cool tone for shadows. */
+  /* Cool tone */
   --shadow-rgb: 10 6 28;
 }
 
 .book-cover {
+
   display: flex;
   position: absolute;
   top: 0;
@@ -161,13 +164,33 @@ body {
   border-radius: var(--book-cover-corner-radius);
   border-bottom-left-radius: 0;
 
-  /* Cover's edges; right and bottom. */
-  /* <offset-x> <offset-y> <blur-radius> <spread-radius> <color> / <alpha> */
+  /* Shadows and highlights for binding/spine profile, hinge, and left edge of cover. */
+  background-image: linear-gradient(
+    to right,
+
+    /* Shadow for left side of binding/spine profile. */
+    rgb(var(--shadow-rgb) / 0.34) 0cqw,
+    rgb(var(--shadow-rgb) / 0.3) 0.2cqw,
+
+    /* Highlight for top of binding/spine profile. */
+    rgb(var(--highlight-rgb) / 0.16) 0.8cqw,
+    rgb(var(--highlight-rgb) / 0.16) 1.2cqw,
+
+    /* Shadow for hinge groove. */
+    rgb(var(--shadow-rgb) / 0.43) 2cqw,
+    rgb(var(--shadow-rgb) / 0.43) 2.1cqw,
+
+    /* Highlight for cover after hinge groove. */
+    rgb(var(--highlight-rgb) / 0.12) 3cqw,
+    rgb(var(--highlight-rgb) / 0) 5cqw
+  );
+
+  /* Right and bottom edges or lip of cover. */
   box-shadow: 
   /* Defines lip. */
-    inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
-    /* Darkens outer edge. */ inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw
-      rgb(var(--shadow-rgb) / 0.2);
+  inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
+  /* Darkens outer edge. */
+  inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw rgb(var(--shadow-rgb) / 0.2);
 }
 
 /* Right side book pages. */
@@ -201,7 +224,8 @@ body {
   content: "";
   position: absolute;
   bottom: var(--book-back-cover-reveal);
-  right: var(--book-back-cover-reveal);
+  /* .5px to hide protrusion of bottom pages beyond right edge of right pages as book scales down. */
+  right: calc(var(--book-back-cover-reveal) + .5px);
   height: var(--page-thickness);
 
   width: calc(var(--book-card-width) - var(--book-back-cover-reveal));
@@ -262,9 +286,16 @@ body {
   /* <offset-x> <offset-y> <blur-radius> <spread-radius> <color> / <alpha> */
   box-shadow: 
   /* Defines lip. */
-  inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
-  /* Darkens outer edge. */
-  inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw rgb(var(--shadow-rgb) / 0.2);
+    inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
+    /* Darkens outer edge. */ inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw
+      rgb(var(--shadow-rgb) / 0.2);
+
+  /* Darkens the book's spine only.  */
+  background-image: linear-gradient(
+    to right,
+    rgb(var(--shadow-rgb) / 0.25) var(--book-cover-inset),
+    var(--book-cover-color) var(--book-cover-inset)
+  );
 }
 
 .book-action-icon {
