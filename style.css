@@ -307,7 +307,6 @@ body {
       )
   );
 
-  /* background-color: var(--book-cover-color); */
   background-color: var(--book-cover-color);
   border-radius: var(--book-cover-corner-radius);
   border-bottom-left-radius: 0;
@@ -320,8 +319,8 @@ body {
   /* Darken the book's spine/binding edge at lower left.  */
   background-image: linear-gradient(
     to right,
-    rgb(var(--cover-shadow) / 0.25) var(--book-cover-inset),
-    var(--book-cover-color) var(--book-cover-inset)
+    rgb(var(--cover-shadow) / 0.4) var(--book-cover-inset),
+    rgb(var(--cover-shadow) / 0.1) var(--book-cover-inset)
   );
 }
 
