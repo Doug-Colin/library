@@ -139,17 +139,19 @@ body {
   --perspective-skew-bottom-left: 0cqw;
 
   /* Lighting and shadows. */
-  --highlight-rgb: 255 248 232;
-  --shadow-rgb: 10 6 28;
   --light-angle: 145deg;
+  --cover-highlight: 255 248 232;
+  --cover-shadow: 10 6 28;
+  --pages-shadow: 68 63 53;
+  /* --pages-shadow: #443f35; */
 
   /* General lighting. */
   background-image: (
     var(--light-angle),
-    rgb(var(--highlight-rgb) / 0.15) 0%,
-    rgb(var(--highlight-rgb) / 0.05) 25%,
-    rgb(var(--shadow-rgb) / 0.09) 75%,
-    rgb(var(--shadow-rgb) / 0.2) 100%
+    rgb(var(--cover-highlight) / 0.15) 0%,
+    rgb(var(--cover-highlight) / 0.05) 25%,
+    rgb(var(--cover-shadow) / 0.09) 75%,
+    rgb(var(--cover-shadow) / 0.2) 100%
   );
 }
 
@@ -175,34 +177,34 @@ body {
       to right,
 
       /* Shadow for left side of binding/spine profile. */
-      rgb(var(--shadow-rgb) / 0.34) 0cqw,
-      rgb(var(--shadow-rgb) / 0.3) 0.2cqw,
+      rgb(var(--cover-shadow) / 0.34) 0cqw,
+      rgb(var(--cover-shadow) / 0.3) 0.2cqw,
 
       /* Highlight for top of binding/spine profile. */
-      rgb(var(--highlight-rgb) / 0.16) 0.8cqw,
-      rgb(var(--highlight-rgb) / 0.16) 1.2cqw,
+      rgb(var(--cover-highlight) / 0.16) 0.8cqw,
+      rgb(var(--cover-highlight) / 0.16) 1.2cqw,
 
-      /* Shadow for hinge groove. */ rgb(var(--shadow-rgb) / 0.43) 2cqw,
-      rgb(var(--shadow-rgb) / 0.43) 2.1cqw,
+      /* Shadow for hinge groove. */ rgb(var(--cover-shadow) / 0.43) 2cqw,
+      rgb(var(--cover-shadow) / 0.43) 2.1cqw,
 
       /* Highlight for cover after hinge groove. */
-      rgb(var(--highlight-rgb) / 0.12) 3cqw,
-      rgb(var(--highlight-rgb) / 0) 5cqw
+      rgb(var(--cover-highlight) / 0.12) 3cqw,
+      rgb(var(--cover-highlight) / 0) 5cqw
     ),
     /* General lighting. */
     linear-gradient(
         var(--light-angle),
-        rgb(var(--highlight-rgb) / 0.15) 0%,
-        rgb(var(--highlight-rgb) / 0.05) 25%,
-        rgb(var(--shadow-rgb) / 0.09) 75%,
-        rgb(var(--shadow-rgb) / 0.15) 100%
+        rgb(var(--cover-highlight) / 0.15) 0%,
+        rgb(var(--cover-highlight) / 0.05) 25%,
+        rgb(var(--cover-shadow) / 0.09) 75%,
+        rgb(var(--cover-shadow) / 0.15) 100%
       );
 
   box-shadow: 
-  /* Right and bottom edges shadows and top edge highlight. */
-    inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
-    inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw rgb(var(--shadow-rgb) / 0.2),
-    inset 0 0.9cqw 0.8cqw -0.55cqw rgb(var(--highlight-rgb) / 0.15);
+  /* Shadows defining right and bottom edges, and highlight for top edge. */
+    inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--cover-shadow) / 0.3),
+    inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw rgb(var(--cover-shadow) / 0.2),
+    inset 0 0.9cqw 0.8cqw -0.55cqw rgb(var(--cover-highlight) / 0.15);
 }
 
 /* Right side book pages. */
@@ -229,6 +231,12 @@ body {
     100% 100%,
     0% calc(100% - var(--page-thickness))
   );
+
+  box-shadow:
+    inset var(--page-thickness) 1cqw 0.9cqw 0.5cqw
+      rgb(var(--pages-shadow) / 0.5),
+    inset 1.5cqw 1cqw 0.5cqw 0.5cqw rgb(var(--pages-shadow) / 0.9),
+    inset 0 0 0 0 rgb(0 0 0);
 }
 
 /* Bottom book pages. */
@@ -259,6 +267,14 @@ body {
     100% 100%,
     calc(var(--book-cover-inset) + var(--perspective-skew-bottom-left)) 100%
   );
+
+  /* Shadow of cover onto pages. */
+  box-shadow:
+    inset 1cqw var(--page-thickness) 0.9cqw 0.5cqw
+      rgb(var(--pages-shadow) / 0.6),
+    inset 1cqw 3cqw 0.9cqw 0.5cqw rgb(var(--pages-shadow) / 0.4),
+    inset 1cqw 2cqw 0.5cqw 0.5cqw rgb(var(--pages-shadow) / 0.6),
+    inset 1cqw 2cqw 0.5cqw 0.5cqw rgb(var(--pages-shadow) / 0.9);
 }
 
 /* Book's rear cover and book's spine. */
@@ -291,19 +307,20 @@ body {
       )
   );
 
+  /* background-color: var(--book-cover-color); */
   background-color: var(--book-cover-color);
   border-radius: var(--book-cover-corner-radius);
   border-bottom-left-radius: 0;
 
   /* Cover's edges; right and bottom. */
   box-shadow:
-    inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
-    inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw rgb(var(--shadow-rgb) / 0.2);
+    inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--cover-shadow) / 0.3),
+    inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw rgb(var(--cover-shadow) / 0.2);
 
   /* Darken the book's spine/binding edge at lower left.  */
   background-image: linear-gradient(
     to right,
-    rgb(var(--shadow-rgb) / 0.25) var(--book-cover-inset),
+    rgb(var(--cover-shadow) / 0.25) var(--book-cover-inset),
     var(--book-cover-color) var(--book-cover-inset)
   );
 }
