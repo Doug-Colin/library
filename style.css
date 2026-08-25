@@ -112,48 +112,45 @@ body {
   container-type: size;
   --book-card-width: 100cqw;
   --book-card-height: 100cqh;
+
   /* So page-thickness scales with container. */
   --page-thickness: 7cqw;
-  /* Hides anti-aliasing seams and prevents revealing of background when cover's corners are rounded off. */
-  --book-front-cover-overlap: 1.5cqw;
-  /* Ensure structure of 'back' side of book matches front. */
-  --book-back-cover-reveal: var(--book-front-cover-overlap);
   --page-gradient:
     #857b66 0px, #a4a48b 1px, #a79a7d 2px, #cfc090 4px, #857b66 4px,
     #cfc090 5px, #857b66 5px, #decf9e 7px, #d0aa59 7px, #cfc090 8px,
     #9d9478 8px, #ebdfb7 10px;
-
-  --book-cover-width: calc(var(--book-card-width) - var(--book-cover-inset));
-  --book-cover-height: calc(var(--book-card-height) - var(--book-cover-inset));
-
-  --book-cover-color: #316a53;
 
   /* Value is identical to --page-thickness; listed as is to be explicit.  */
   --book-cover-inset: calc(
     var(--book-back-cover-reveal) + var(--page-thickness) -
       var(--book-front-cover-overlap)
   );
+  --book-cover-width: calc(var(--book-card-width) - var(--book-cover-inset));
+  --book-cover-height: calc(var(--book-card-height) - var(--book-cover-inset));
+  /* Hides anti-aliasing seams and prevents revealing of background when cover's corners are rounded off. */
+  --book-front-cover-overlap: 1.5cqw;
+  /* Ensure structure of 'back' side of book matches front. */
+  --book-back-cover-reveal: var(--book-front-cover-overlap);
   --book-cover-corner-radius: 1cqw;
+  --book-cover-color: #316a53;
 
   /* Adjusts perspective angles of rear cover's top right and bottom left corners. */
   --perspective-skew-top-right: 0cqw;
   --perspective-skew-bottom-left: 0cqw;
 
   /* Lighting and shadows. */
-  /* Warm tone */
   --highlight-rgb: 255 248 232;
-  /* Cool tone */
   --shadow-rgb: 10 6 28;
   --light-angle: 145deg;
-      /* General lighting. */
-  
-      background-image: (
-      var(--light-angle),
-      rgb(var(--highlight-rgb) / 0.15) 0%,
-      rgb(var(--highlight-rgb) / 0.05) 25%,
-      rgb(var(--shadow-rgb) / 0.09) 75%,
-      rgb(var(--shadow-rgb) / 0.2) 100%
-    );
+
+  /* General lighting. */
+  background-image: (
+    var(--light-angle),
+    rgb(var(--highlight-rgb) / 0.15) 0%,
+    rgb(var(--highlight-rgb) / 0.05) 25%,
+    rgb(var(--shadow-rgb) / 0.09) 75%,
+    rgb(var(--shadow-rgb) / 0.2) 100%
+  );
 }
 
 .book-cover {
@@ -192,22 +189,20 @@ body {
       rgb(var(--highlight-rgb) / 0.12) 3cqw,
       rgb(var(--highlight-rgb) / 0) 5cqw
     ),
-
     /* General lighting. */
     linear-gradient(
-      var(--light-angle),
-      rgb(var(--highlight-rgb) / 0.15) 0%,
-      rgb(var(--highlight-rgb) / 0.05) 25%,
-      rgb(var(--shadow-rgb) / 0.09) 75%,
-      rgb(var(--shadow-rgb) / 0.2) 100%
-    );
+        var(--light-angle),
+        rgb(var(--highlight-rgb) / 0.15) 0%,
+        rgb(var(--highlight-rgb) / 0.05) 25%,
+        rgb(var(--shadow-rgb) / 0.09) 75%,
+        rgb(var(--shadow-rgb) / 0.15) 100%
+      );
 
-  /* Right and bottom lip of cover. */
   box-shadow: 
-  /* Defines lip. */
+  /* Right and bottom edges shadows and top edge highlight. */
     inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
-    /* Darkens outer edge. */ inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw
-      rgb(var(--shadow-rgb) / 0.2);
+    inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw rgb(var(--shadow-rgb) / 0.2),
+    inset 0 0.9cqw 0.8cqw -0.55cqw rgb(var(--highlight-rgb) / 0.15);
 }
 
 /* Right side book pages. */
@@ -253,10 +248,10 @@ body {
   background: repeating-linear-gradient(to bottom, var(--page-gradient));
 
   /* 
-  Clockwise coordinates. 
   Path clipped on left end, where it meets the book's spine, but not right end,
   at the miter of the two page strips; fully extending this strip beneath the other 
   hides anti-aliasing seams that appear when both are mitered and adjoined.
+  Clockwise coordinates. 
   */
   clip-path: polygon(
     0% 0%,
@@ -279,16 +274,13 @@ body {
   /* Ensure back cover renders beneath page strips. */
   z-index: -1;
 
-  background-color: var(--book-cover-color);
-  border-radius: var(--book-cover-corner-radius);
-  border-bottom-left-radius: 0;
-
   /* 
   Path clips rear cover, which extends full width of parent container, 
   to represent book's spine by wrapping the left edge of bottom pages.
+  Clockwise coordinates. 
   */
   clip-path: polygon(
-    /* Clockwise coordinates. */ 0% 0%,
+    0% 0%,
     100% 0%,
     100% 100%,
     calc(var(--book-cover-inset) + var(--perspective-skew-bottom-left)) 100%,
@@ -299,15 +291,16 @@ body {
       )
   );
 
-  /* Cover's edges; right and bottom. */
-  /* <offset-x> <offset-y> <blur-radius> <spread-radius> <color> / <alpha> */
-  box-shadow: 
-  /* Defines lip. */
-    inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
-    /* Darkens outer edge. */ inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw
-      rgb(var(--shadow-rgb) / 0.2);
+  background-color: var(--book-cover-color);
+  border-radius: var(--book-cover-corner-radius);
+  border-bottom-left-radius: 0;
 
-  /* Darkens the book's spine only.  */
+  /* Cover's edges; right and bottom. */
+  box-shadow:
+    inset -0.7cqw -0.7cqw 0.15cqw 0 rgb(var(--shadow-rgb) / 0.3),
+    inset -0.3cqw -0.3cqw 0.1cqw 0.1cqw rgb(var(--shadow-rgb) / 0.2);
+
+  /* Darken the book's spine/binding edge at lower left.  */
   background-image: linear-gradient(
     to right,
     rgb(var(--shadow-rgb) / 0.25) var(--book-cover-inset),
